@@ -31,29 +31,29 @@ public class CalculatorService {
 
     @POST
     @Path("calc")
-    public Map<String, Integer> calculate(CargoEntity obj){
+    public Map<String, Double> calculate(CargoEntity obj){
         char operation = obj.getOperation();
-        int result;
+        Double result=  0d;
         if(operation=='+'){
-            result = obj.getNumber1()+obj.getNumber2();
+            result = obj.getNumber1()+(Double.valueOf(obj.getNumber2()));
         }
         else if(operation=='-'){
-            result = obj.getNumber1()-obj.getNumber2();
+            result = obj.getNumber1()-(Double.valueOf(obj.getNumber2()));
         }
         else if(operation=='*'){
-            result = obj.getNumber1()*obj.getNumber2();
+            result = obj.getNumber1()*(Double.valueOf(obj.getNumber2()));
         }
         else if(operation=='/'){
             if(obj.getNumber2()==0)
                 throw new IllegalStateException("KYS");
-            result = obj.getNumber1()/obj.getNumber2();
+            result = obj.getNumber1()/(Double.valueOf(obj.getNumber2()));
         }
         else{
             throw new IllegalStateException("Operation not supported");
         }
         em.persist(obj);
-        Map<String, Integer> hm= new HashMap<String, Integer>();
-        hm.put("Result", new Integer(result));
+        Map<String, Double> hm= new HashMap<String, Double>();
+        hm.put("Result", result);
         return hm;
     }
 
